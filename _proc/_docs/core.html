@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="2D Ray Tracer Experiments">
+<meta name="description" content="This is a library for doing 2D ray tracing.">
 
 <title>planolux - PlanoLux</title>
 <style>
@@ -94,17 +94,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="planolux - PlanoLux">
-<meta property="og:description" content="2D Ray Tracer Experiments">
-<meta property="og:image" content="https://iohazard.github.io/planolux/index_files/figure-html/fig-prism-output-1.png">
+<meta property="og:description" content="This is a library for doing 2D ray tracing.">
+<meta property="og:image" content="https://iohazard.github.io/planolux/00_core_files/figure-html/cell-15-output-1.png">
 <meta property="og:site-name" content="planolux">
 <meta property="og:image:height" content="413">
 <meta property="og:image:width" content="559">
 <meta name="twitter:title" content="planolux - PlanoLux">
-<meta name="twitter:description" content="2D Ray Tracer Experiments">
-<meta name="twitter:image" content="https://iohazard.github.io/planolux/index_files/figure-html/fig-prism-output-1.png">
+<meta name="twitter:description" content="This is a library for doing 2D ray tracing.">
+<meta name="twitter:image" content="https://iohazard.github.io/planolux/00_core_files/figure-html/cell-15-output-1.png">
 <meta name="twitter:image-height" content="413">
 <meta name="twitter:image-width" content="559">
 <meta name="twitter:card" content="summary_large_image">
@@ -131,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">PlanoLux</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./core.html">PlanoLux</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
@@ -145,13 +147,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">PlanoLux</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./core.html" class="sidebar-item-text sidebar-link">
+  <a href="./core.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">PlanoLux</span></a>
   </div>
 </li>
@@ -165,8 +167,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#install" id="toc-install" class="nav-link active" data-scroll-target="#install">Install</a></li>
-  <li><a href="#how-to-use" id="toc-how-to-use" class="nav-link" data-scroll-target="#how-to-use">How to use</a></li>
+  <li><a href="#point" id="toc-point" class="nav-link active" data-scroll-target="#point">Point</a></li>
+  <li><a href="#ray" id="toc-ray" class="nav-link" data-scroll-target="#ray">Ray</a></li>
+  <li><a href="#surface" id="toc-surface" class="nav-link" data-scroll-target="#surface">Surface</a></li>
+  <li><a href="#plot_scene" id="toc-plot_scene" class="nav-link" data-scroll-target="#plot_scene">plot_scene</a></li>
+  <li><a href="#gen_rays" id="toc-gen_rays" class="nav-link" data-scroll-target="#gen_rays">gen_rays</a></li>
+  <li><a href="#cast" id="toc-cast" class="nav-link" data-scroll-target="#cast">cast</a></li>
+  <li><a href="#intersect" id="toc-intersect" class="nav-link" data-scroll-target="#intersect">intersect</a></li>
+  <li><a href="#vector-reflection" id="toc-vector-reflection" class="nav-link" data-scroll-target="#vector-reflection">Vector Reflection</a>
+  <ul class="collapse">
+  <li><a href="#reflect" id="toc-reflect" class="nav-link" data-scroll-target="#reflect">reflect</a></li>
+  </ul></li>
+  <li><a href="#vector-refraction-snells-law" id="toc-vector-refraction-snells-law" class="nav-link" data-scroll-target="#vector-refraction-snells-law">Vector refraction Snell’s Law</a>
+  <ul class="collapse">
+  <li><a href="#refract" id="toc-refract" class="nav-link" data-scroll-target="#refract">refract</a></li>
+  <li><a href="#lens" id="toc-lens" class="nav-link" data-scroll-target="#lens">lens</a></li>
+  </ul></li>
+  <li><a href="#fresnel-equations" id="toc-fresnel-equations" class="nav-link" data-scroll-target="#fresnel-equations">Fresnel Equations</a>
+  <ul class="collapse">
+  <li><a href="#reflectance" id="toc-reflectance" class="nav-link" data-scroll-target="#reflectance">reflectance</a></li>
+  <li><a href="#raytrace" id="toc-raytrace" class="nav-link" data-scroll-target="#raytrace">raytrace</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/iohazard/planolux/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -180,7 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div>
   <div class="description">
-    2D Ray Tracer Experiments
+    This is a library for doing 2D ray tracing.
   </div>
 </div>
 
@@ -196,111 +217,153 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
-<p>This file will become your README and also the index of your documentation.</p>
-<section id="install" class="level2">
-<h2 class="anchored" data-anchor-id="install">Install</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install planolux</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is the basic class for 2D points.</p>
+<hr>
+<p><a href="https://github.com/iohazard/planolux/blob/main/planolux/core.py#L11" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="point" class="level3">
+<h3 class="anchored" data-anchor-id="point">Point</h3>
+<blockquote class="blockquote">
+<pre><code> Point (xi, yi)</code></pre>
+</blockquote>
+<p>Initialize self. See help(type(self)) for accurate signature.</p>
+<p>This is the class for a ray, or vector with origin point.</p>
+<hr>
+<p><a href="https://github.com/iohazard/planolux/blob/main/planolux/core.py#L53" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
-<section id="how-to-use" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-use">How to use</h2>
-<p>This is an example of a prism. <a href="#fig-prism">Figure&nbsp;1</a></p>
-<div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>surf <span class="op">=</span> []</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>surf.append(Surface(Point(<span class="dv">4</span>,<span class="dv">2</span>), Point(<span class="dv">2</span>,<span class="dv">2</span>), n2<span class="op">=</span><span class="fl">1.5</span>))</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>surf.append(Surface(Point(<span class="dv">3</span>,<span class="dv">0</span>), Point(<span class="dv">4</span>,<span class="dv">2</span>), n2<span class="op">=</span><span class="fl">1.5</span>))</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>surf.append(Surface(Point(<span class="dv">2</span>,<span class="dv">2</span>), Point(<span class="dv">3</span>,<span class="dv">0</span>), n2<span class="op">=</span><span class="fl">1.5</span>))</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Source Point</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>sp    <span class="op">=</span> Point(<span class="fl">0.0</span>,<span class="fl">1.0</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial Rays</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>rays_out <span class="op">=</span> gen_rays(sp, <span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">5</span>, endpoint<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>rays_all <span class="op">=</span> raytrace(rays_out, surf)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>plot_scene(rays_all, surf, sp, raycol<span class="op">=</span><span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="ray" class="level3">
+<h3 class="anchored" data-anchor-id="ray">Ray</h3>
+<blockquote class="blockquote">
+<pre><code> Ray (ai, bi, ii=1.0)</code></pre>
+</blockquote>
+<p>Initialize self. See help(type(self)) for accurate signature.</p>
+<p>This is a surface to reflect, refract, absorb, scatter, image at.</p>
+<p>This needs to be ref/ref, ref only, absorb only, scatter</p>
+<hr>
+<p><a href="https://github.com/iohazard/planolux/blob/main/planolux/core.py#L66" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="surface" class="level3">
+<h3 class="anchored" data-anchor-id="surface">Surface</h3>
+<blockquote class="blockquote">
+<pre><code> Surface (ai, bi, n1=1.0, n2=1.5)</code></pre>
+</blockquote>
+<p>Initialize self. See help(type(self)) for accurate signature.</p>
+<p>Intersection and ray casting.</p>
+<hr>
+<p><a href="https://github.com/iohazard/planolux/blob/main/planolux/core.py#L121" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="plot_scene" class="level3">
+<h3 class="anchored" data-anchor-id="plot_scene">plot_scene</h3>
+<blockquote class="blockquote">
+<pre><code> plot_scene (rays, surfs, sp, raycol='red')</code></pre>
+</blockquote>
+<hr>
+<p><a href="https://github.com/iohazard/planolux/blob/main/planolux/core.py#L111" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="gen_rays" class="level3">
+<h3 class="anchored" data-anchor-id="gen_rays">gen_rays</h3>
+<blockquote class="blockquote">
+<pre><code> gen_rays (sp=&lt;__main__.Point object at 0x7fbd8223b4c0&gt;, ao=-180, ae=180,
+           na=60, endpoint=True)</code></pre>
+</blockquote>
+<hr>
+<p><a href="https://github.com/iohazard/planolux/blob/main/planolux/core.py#L96" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="cast" class="level3">
+<h3 class="anchored" data-anchor-id="cast">cast</h3>
+<blockquote class="blockquote">
+<pre><code> cast (r, surf)</code></pre>
+</blockquote>
+<hr>
+<p><a href="https://github.com/iohazard/planolux/blob/main/planolux/core.py#L83" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="intersect" class="level3">
+<h3 class="anchored" data-anchor-id="intersect">intersect</h3>
+<blockquote class="blockquote">
+<pre><code> intersect (R, S)</code></pre>
+</blockquote>
+<p>Now show this works.</p>
+</section>
+<section id="vector-reflection" class="level2">
+<h2 class="anchored" data-anchor-id="vector-reflection">Vector Reflection</h2>
+<p>For an incoming ray <span class="math inline">\(\vec{s}\)</span> and a surface normal <span class="math inline">\(\vec{n}\)</span> the reflected ray <span class="math inline">\(\vec{v}_{reflect}\)</span></p>
+<p><span class="math display">\[ \vec{v}_{reflect} = \vec{s} - 2 (\vec{s} \cdot \vec{n}) \vec{n}\]</span></p>
+<hr>
+<p><a href="https://github.com/iohazard/planolux/blob/main/planolux/core.py#L144" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="reflect" class="level3">
+<h3 class="anchored" data-anchor-id="reflect">reflect</h3>
+<blockquote class="blockquote">
+<pre><code> reflect (R, S, P)</code></pre>
+</blockquote>
+<p>This checked reflections at various angles.</p>
+</section>
+</section>
+<section id="vector-refraction-snells-law" class="level2">
+<h2 class="anchored" data-anchor-id="vector-refraction-snells-law">Vector refraction Snell’s Law</h2>
+<p>For an incoming ray <span class="math inline">\(\vec{s}\)</span> and a surface normal <span class="math inline">\(\vec{n}\)</span> the refracted ray <span class="math inline">\(\vec{v}_{refract}\)</span></p>
+<p><span class="math display">\[\vec{v}_{refract} = r \vec{s} + \left( r c - \sqrt{1-r^2 (1-c^2)} \vec{n} \right)\]</span></p>
+<p>where <span class="math inline">\(r = \frac{n_1}{n_2}\)</span> and <span class="math inline">\(c = -\vec{n} \cdot \vec{s}\)</span>.</p>
+<hr>
+<p><a href="https://github.com/iohazard/planolux/blob/main/planolux/core.py#L156" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="refract" class="level3">
+<h3 class="anchored" data-anchor-id="refract">refract</h3>
+<blockquote class="blockquote">
+<pre><code> refract (R, S, P)</code></pre>
+</blockquote>
+<hr>
+<p><a href="https://github.com/iohazard/planolux/blob/main/planolux/core.py#L178" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="lens" class="level3">
+<h3 class="anchored" data-anchor-id="lens">lens</h3>
+<blockquote class="blockquote">
+<pre><code> lens (R1, R2, T, H, XL, N=16)</code></pre>
+</blockquote>
+<p>Ray caster should start at sp, array of cast rays added to list with initial intensity.</p>
+<p>Every ray is intersected with every surface. Closest surface (in direction of ray) is chosen as first intersect. Intersect position noted as new source point, reflected and refracted rays generated. Intensity of each decreased.</p>
+<p>Rays removed with no intersections left or intensity too low.</p>
+</section>
+</section>
+<section id="fresnel-equations" class="level2">
+<h2 class="anchored" data-anchor-id="fresnel-equations">Fresnel Equations</h2>
+<hr>
+<p><a href="https://github.com/iohazard/planolux/blob/main/planolux/core.py#L199" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="reflectance" class="level3">
+<h3 class="anchored" data-anchor-id="reflectance">reflectance</h3>
+<blockquote class="blockquote">
+<pre><code> reflectance (r, sc)</code></pre>
+</blockquote>
+<p>Now lets see all the reflect and refract work.</p>
+<div class="cell" data-execution_count="166">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>surf <span class="op">=</span> []</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>surf.append(Surface(Point(<span class="dv">4</span>,<span class="dv">2</span>), Point(<span class="dv">2</span>,<span class="dv">2</span>), n2<span class="op">=</span><span class="fl">1.5</span>))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>surf.append(Surface(Point(<span class="dv">3</span>,<span class="dv">0</span>), Point(<span class="dv">4</span>,<span class="dv">2</span>), n2<span class="op">=</span><span class="fl">1.5</span>))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>surf.append(Surface(Point(<span class="dv">2</span>,<span class="dv">2</span>), Point(<span class="dv">3</span>,<span class="dv">0</span>), n2<span class="op">=</span><span class="fl">1.5</span>))</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Source Point</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>sp    <span class="op">=</span> Point(<span class="fl">0.0</span>,<span class="fl">1.0</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial Rays</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>rays_out <span class="op">=</span> gen_rays(sp, <span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">5</span>, endpoint<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<p><a href="https://github.com/iohazard/planolux/blob/main/planolux/core.py#L218" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="raytrace" class="level3">
+<h3 class="anchored" data-anchor-id="raytrace">raytrace</h3>
+<blockquote class="blockquote">
+<pre><code> raytrace (rays_out, surf, reflect_rays=True, refract_rays=True, DEPTH=10,
+           RT=0.001, verbose=False)</code></pre>
+</blockquote>
+<div class="cell" data-execution_count="168">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rays_all <span class="op">=</span> raytrace(rays_out, surf)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>plot_scene(rays_all, surf, sp, raycol<span class="op">=</span><span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="fig-prism" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="index_files/figure-html/fig-prism-output-1.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;1: A prizm</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>W <span class="op">=</span> <span class="fl">0.5</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>surf <span class="op">=</span> []</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>surf.append(Surface(Point(W<span class="op">/</span><span class="dv">2</span>,<span class="op">-</span><span class="dv">5</span>), Point(W<span class="op">/</span><span class="dv">2</span>,<span class="fl">1.0</span>), n2<span class="op">=</span><span class="fl">1.5</span>))</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>surf.append(Surface(Point(<span class="op">-</span>W<span class="op">/</span><span class="dv">2</span>,<span class="dv">2</span>), Point(<span class="op">-</span>W<span class="op">/</span><span class="dv">2</span>,<span class="op">-</span><span class="dv">5</span>), n2<span class="op">=</span><span class="fl">1.5</span>))</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>surf.append(Surface(Point(W<span class="op">/</span><span class="dv">2</span>,<span class="fl">1.0</span>), Point(<span class="op">-</span>W<span class="op">/</span><span class="dv">2</span>,<span class="fl">2.0</span>), n2<span class="op">=</span><span class="fl">1.5</span>))</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Source Point</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>sp    <span class="op">=</span> Point(<span class="op">-</span><span class="dv">4</span>,<span class="op">-</span><span class="dv">2</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial Rays</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>rays_out <span class="op">=</span> gen_rays(sp, <span class="dv">25</span>, <span class="dv">55</span>, <span class="dv">15</span>, endpoint<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>rays_all <span class="op">=</span> raytrace(rays_out, surf)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>plot_scene(rays_all, surf, sp, raycol<span class="op">=</span><span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/Users/michaeljohnson/Dev/planolux/planolux/core.py:210: RuntimeWarning: invalid value encountered in sqrt
-  rs = ((n1*np.cos(ai) - n2*np.sqrt(1-(n1/n2*np.sin(ai))**2))/(n1*np.cos(ai) + n2*np.sqrt(1-(n1/n2*np.sin(ai))**2)))**2
-/Users/michaeljohnson/Dev/planolux/planolux/core.py:211: RuntimeWarning: invalid value encountered in sqrt
-  rp = ((-n2*np.cos(ai) + n1*np.sqrt(1-(n1/n2*np.sin(ai))**2))/(n2*np.cos(ai) + n1*np.sqrt(1-(n1/n2*np.sin(ai))**2)))**2
-/Users/michaeljohnson/Dev/planolux/planolux/core.py:167: RuntimeWarning: invalid value encountered in sqrt
-  f = r*c - np.sqrt(1-r**2*(1-c**2))</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-3-output-2.png" class="img-fluid"></p>
-</div>
-</div>
-<div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>surf <span class="op">=</span> []</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>surf.append(Surface(Point(<span class="fl">1.0</span>,<span class="op">-</span><span class="fl">1.0</span>), Point(<span class="op">-</span><span class="fl">1.0</span>,<span class="op">-</span><span class="fl">1.0</span>)))</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>surf.append(Surface(Point(<span class="op">-</span><span class="fl">1.5</span>,<span class="op">-</span><span class="fl">1.5</span>), Point(<span class="fl">1.5</span>,<span class="op">-</span><span class="fl">1.5</span>)))</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># surf.append(Surface(Point(1.0,1), Point(1.0,-1.0)))</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># surf.append(Surface(Point(1.5,-1.5), Point(1.5,1.5)))</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">16</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>R1 <span class="op">=</span> <span class="fl">3.0</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>R2 <span class="op">=</span> R1</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>T  <span class="op">=</span> <span class="fl">0.5</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>H  <span class="op">=</span> <span class="fl">0.75</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 1/f = (n2-1)(1/R1+1/r2)-(n2-1)**2*d/(n2*R1*r2)</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> surf[<span class="dv">0</span>].n2</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>fin <span class="op">=</span> (n<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>(<span class="dv">1</span><span class="op">/</span>R1<span class="op">+</span><span class="dv">1</span><span class="op">/</span>R2)<span class="op">-</span>((n<span class="op">-</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span>)<span class="op">*</span>T<span class="op">/</span>(n<span class="op">*</span>R1<span class="op">*</span>R2)</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>XL <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">/</span>fin</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">1</span><span class="op">/</span>fin)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">#print(np.arcsin(surf[0].n1/surf[0].n2)*180.0/np.pi)</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">#XL = -5</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>su <span class="op">=</span> lens(R1, R2, T, H, XL, N<span class="op">=</span><span class="dv">16</span>)</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ss <span class="kw">in</span> su:</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    surf.append(ss)</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Source Point</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>sp    <span class="op">=</span> Point(<span class="fl">0.0</span>,<span class="fl">0.0</span>)</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial Rays</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>rays_out <span class="op">=</span> gen_rays(sp, <span class="op">-</span><span class="dv">180</span>, <span class="dv">180</span>, <span class="dv">60</span>, endpoint<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>rays_all <span class="op">=</span> raytrace(rays_out, surf, reflect_rays<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>plot_scene(rays_all, surf, sp, raycol<span class="op">=</span><span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>3.085714285714286</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-4-output-2.png" class="img-fluid"></p>
+<p><img src="00_core_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
