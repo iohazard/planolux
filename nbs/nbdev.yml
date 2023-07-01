@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "planolux"
+  site-url: "https://iohazard.github.io/planolux"
+  description: "2D Ray Tracer Experiments"
+  repo-branch: main
+  repo-url: "https://github.com/iohazard/planolux"
